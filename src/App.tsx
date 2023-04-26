@@ -3,12 +3,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import './App.css';
 import NavBar from "./components/navBar/NavBar";
-import ItemListContainer from "./components/itemListContainer/ItemListContainer";
-import CartWidget from "./components/cartWidget/CartWidget";
 import LandingPage from "./pages/landing/Landing";
 import NotFoundPage from "./pages/notFound/NotFound";
 import CartPage from "./pages/cart/Cart";
-import ContactPage from "./pages/contact/Contact";
+import FavoritesPage from './pages/favorites/Favorites';
+
 
 function App() {
     return (
@@ -19,7 +18,7 @@ function App() {
                     <Routes>
                         <Route path="/" element={<LandingPage/>} />
                         <Route path="/cart" element={<CartPage/>} />
-                        <Route path="/contact" element={<ContactPage/>} />
+                        <Route path="/favorites" element={<FavoritesPage/>} />
                         <Route path="*" element={<NotFoundPage/>} />
                     </Routes>
                 </BrowserRouter>

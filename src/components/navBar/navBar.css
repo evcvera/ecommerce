@@ -1,0 +1,9 @@
+.header-item{
+    width: 80px;
+}
+
+@media (max-width: 767px) {
+    .header-item{
+        width: 40px;
+    }
+}

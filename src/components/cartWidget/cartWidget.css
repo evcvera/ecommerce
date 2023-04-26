@@ -1,0 +1,8 @@
+.item-count{
+    position: absolute;
+    border-radius: 50%;
+    background: red;
+    height: 1.3rem;
+    width: 1.3rem;
+    font-size: 0.8rem;
+}

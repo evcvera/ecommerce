@@ -1,11 +1,12 @@
 import React from 'react';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import './cartWidget.css'
 
 const CartWidget: React.FC = () => {
     return (
         <>
             <i className="bi bi-cart"/>
-            0
+            <span className="item-count">5</span>
         </>
     )
 };
