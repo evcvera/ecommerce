@@ -39,7 +39,7 @@ const NavBar: React.FC = () => {
                                 </Link>
                             </li>
                             <li className="nav-item header-item">
-                                <Link to="/favorites" className={`nav-link ${location.pathname === '/contact' ? ' text-white' : ''}`}>
+                                <Link to="/favorites" className={`nav-link ${location.pathname === '/favorites' ? ' text-white' : ''}`}>
                                     <i className="bi bi-heart"/>
                                     <div className="d-md-none d-sm-none d-none  d-lg-block">Favoritos</div>
                                 </Link>
