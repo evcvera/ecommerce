@@ -1,13 +1,17 @@
 import React from 'react';
+import {ResultsEntity} from "../../models/interfaces/iMeliSearch";
+import Item from "../item/Item";
 
 interface Props {
-    greeting: string;
+    items: ResultsEntity[];
 }
 
-const ItemListContainer: React.FC<Props> = ({greeting}) => {
+const ItemListContainer: React.FC<Props> = ({items}) => {
     return (
         <div>
-            <h1>{greeting}</h1>
+            {items.map((item) => (
+                <Item item={item} key={item.id} />
+            ))}
         </div>
     )
 };

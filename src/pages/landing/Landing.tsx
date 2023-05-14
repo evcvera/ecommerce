@@ -19,7 +19,7 @@ const LandingPage: React.FC = () => {
                         <div className="w-auto d-flex justify-content-center">
                             <img className="w-100 "
                                  src="https://dmdqet87i5rod.cloudfront.net/estoesmedia/5e722a605abf2_meli180320.jpg"
-                                alt="brand"/>
+                                 alt="brand"/>
                         </div>
                     </div>
                 </div>
@@ -28,19 +28,19 @@ const LandingPage: React.FC = () => {
             <div className="container features-section">
                 <div className="row">
                     <div className="col-md-4 my-1">
-                        <i className="bi bi-speedometer2"/>
+                        <i className="bi bi-speedometer2 fs-1"/>
                         <h3>Entrega rápida</h3>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod dui vitae urna iaculis,
                             vel malesuada magna venenatis. Nunc tempor diam eu gravida tempus.</p>
                     </div>
                     <div className="col-md-4 my-1">
-                        <i className="bi bi-calendar2-check"/>
+                        <i className="bi bi-calendar2-check fs-1"/>
                         <h3>Atención al cliente</h3>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod dui vitae urna iaculis,
                             vel malesuada magna venenatis. Nunc tempor diam eu gravida tempus.</p>
                     </div>
                     <div className="col-md-4 my-1">
-                        <i className="bi bi-people"/>
+                        <i className="bi bi-people fs-1"/>
                         <h3>Expertos especializados</h3>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod dui vitae urna iaculis,
                             vel malesuada magna venenatis. Nunc tempor diam eu gravida tempus.</p>
