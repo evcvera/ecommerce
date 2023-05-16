@@ -1,3 +1,6 @@
+# Using my web app
+![Miaimeeee](src/assets/gifs/2023-05-16%2002-19-50.gif)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
