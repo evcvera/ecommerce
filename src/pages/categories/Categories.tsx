@@ -38,9 +38,9 @@ const CategoriesPage: React.FC = () => {
             name: 'Refrigeracion',
             image: 'bi bi-thermometer-snow fs-1'
         }
-    ]
+    ];
 
-    const description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod dui vitae urna iaculis, vel malesuada magna venenatis. Nunc tempor diam eu gravida tempus.'
+    const description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod dui vitae urna iaculis, vel malesuada magna venenatis. Nunc tempor diam eu gravida tempus.';
 
     return (
         <div className="container">

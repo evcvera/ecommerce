@@ -1,14 +1,34 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
 import {IMeliSingleItem} from "../../models/interfaces/iMeliSingleItem";
 import {IMeliItemDescription} from "../../models/interfaces/iMeliItemDescription";
+import itemCountCart from "../../modelServices/itemCountCart";
 
 interface Props {
     item: IMeliSingleItem | undefined;
     itemDescription: IMeliItemDescription | undefined;
+    refreshItemCount: () => void;
+
 }
 
-const ItemDetail: React.FC<Props> = ({item, itemDescription}) => {
+const ItemDetail: React.FC<Props> = ({item, itemDescription, refreshItemCount}) => {
+    const [count, setCount] = useState(0);
+
+
+    function SetCount(amount: number) {
+        if (item?.available_quantity && count + amount <= item?.available_quantity) {
+            itemCountCart.updateMap(item.id, amount);
+            setCount(itemCountCart.getElementCount(item.id))
+        }
+        refreshItemCount()
+    }
+
+    useEffect(() => {
+        if (item) {
+            setCount(itemCountCart.getElementCount(item?.id))
+        }
+    }, [item]);
+
     return (
         <div className="container py-5">
             {(item && itemDescription) &&
@@ -27,6 +47,19 @@ const ItemDetail: React.FC<Props> = ({item, itemDescription}) => {
                         <Link to={item.permalink} target="_blank">
                             <button className="btn btn-primary mt-4">Comprar ahora</button>
                         </Link>
+
+                        <div className="mt-2">
+                            <div className="d-flex flex-column align-items-center">
+                                <div className="btn-group" role="group">
+                                    <button onClick={() => SetCount(-1)} className="btn btn-secondary">-
+                                    </button>
+                                    <span className="mx-2">{count}</span>
+                                    <button onClick={() => SetCount(1)} className="btn btn-secondary">+
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
                 <div className="py-5">

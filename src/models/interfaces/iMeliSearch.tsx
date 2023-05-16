@@ -44,13 +44,13 @@ export interface ResultsEntity {
     installments?: Installment;
     quantity?: any;
     address: Address;
-    shipping: Shipping;
+    shipping?: Shipping;
     variations: Variation[];
     seller_address: SellerAddress;
     seller_contact: SellerContact;
     location: Location;
     attributes?: (AttributesEntity)[] | null;
-    original_price?: null;
+    original_price?: number;
     category_id: string;
     official_store_id?: null;
     domain_id: string;

@@ -8,7 +8,11 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import CartWidget from "../cartWidget/CartWidget";
 
-const NavBar: React.FC = () => {
+interface Props {
+    itemCount: number;
+}
+
+const NavBar: React.FC<Props> = ({itemCount}) => {
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -50,7 +54,7 @@ const NavBar: React.FC = () => {
                         <li className="nav-item header-item">
                             <Link to="/cart"
                                   className={`nav-link ${location.pathname === '/cart' ? ' text-white' : ''}`}>
-                                <CartWidget/>
+                                <CartWidget itemCount={itemCount}/>
                                 <div className="d-md-none d-sm-none d-none  d-lg-block">Cart</div>
                             </Link>
                         </li>

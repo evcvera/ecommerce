@@ -7,18 +7,19 @@ import buildImageService from "../../modelServices/buildImage";
 
 interface Props {
     item: ResultsEntity | Body;
+    refreshItemCount: () => void;
 }
 
-const Item: React.FC<Props> = ({item}) => {
-    const [count, setCount] = useState(0)
+const Item: React.FC<Props> = ({item, refreshItemCount}) => {
+    const [count, setCount] = useState(0);
 
 
     function SetCount(amount: number) {
         if (count + amount <= item.available_quantity) {
-            itemCountCart.updateMap(item.id, amount)
+            itemCountCart.updateMap(item.id, amount);
             setCount(itemCountCart.getElementCount(item.id))
         }
-
+        refreshItemCount()
     }
 
     useEffect(() => {
@@ -31,24 +32,29 @@ const Item: React.FC<Props> = ({item}) => {
             <div className="col-md-3">
                 {<img src={buildImageService.HD(item?.thumbnail)} alt={item.title} className="w-50 h-auto"/>}
             </div>
-            <div className="col-md-8 item-details">
-                <div className="item-header">
-                    <div className="item-price">
+            <div className="col-md-8">
+                <div>
+                    <div>
                         <Link to={`/item/${item.id}`}>
                             <h4>{item.title}</h4>
                         </Link>
-                        <p className="item-price-amount">
+                        <p>
                             {new Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS"}).format(item.price)}
                         </p>
-                        {/*    {item.shipping.free_shipping &&
-                        <p className="item-free-shipping">Envío gratis</p>}*/}
+
+                        {item.original_price &&
+                        <p className={"text-center text-decoration-line-through"}>Antes:
+                            ${item.original_price.toLocaleString()} </p>}
+
+                        {item.shipping?.free_shipping &&
+                        <p>Envío gratis</p>}
                     </div>
-                    <div className="item-seller">
-                        {/*{(item?.installments !== undefined && item.installments > 0) &&
-                        <p className="item-seller-name">Cuotas: {item?.installments?.quantity}</p>}*/}
+                    <div>
+                        {(item?.installments !== undefined && item.installments > 0) &&
+                        <p>Cuotas: {item?.installments?.quantity}</p>}
 
                         {item?.sold_quantity !== undefined &&
-                        <p className="item-location">{item.sold_quantity} vendidos</p>}
+                        <p>{item.sold_quantity} vendidos</p>}
 
                     </div>
                 </div>

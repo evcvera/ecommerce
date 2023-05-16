@@ -13,7 +13,7 @@ export interface Body {
     official_store_id: null;
     price: number;
     base_price: number;
-    original_price: null;
+    original_price?: number;
     currency_id: string;
     initial_quantity: number;
     available_quantity: number;
@@ -33,7 +33,8 @@ export interface Body {
     descriptions: Description[];
     accepts_mercadopago: boolean;
     non_mercado_pago_payment_methods: any[];
-    shipping: Shipping;
+    shipping?: Shipping;
+    installments?: any;
     international_delivery_mode: string;
     seller_address: SellerAddress;
     seller_contact: SellerContact;
