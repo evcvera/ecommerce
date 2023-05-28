@@ -7,13 +7,7 @@ import {IMeliItemDescription} from "../../models/interfaces/iMeliItemDescription
 import ItemDetail from "../../components/itemDetail/itemDetail";
 import Loading from "../../components/loading/Loading";
 
-
-interface Props {
-    refreshItemCount: () => void;
-
-}
-
-const ItemPage: React.FC<Props> = ({refreshItemCount}) => {
+const ItemPage: React.FC = () => {
     const [meliItem, setMeliItem] = useState<IMeliSingleItem | undefined>(undefined);
     const [meliItemDescription, setmeliItemDescription] = useState<IMeliItemDescription | undefined>(undefined);
     const {id} = useParams<{ id: string }>();
@@ -40,7 +34,7 @@ const ItemPage: React.FC<Props> = ({refreshItemCount}) => {
         <>
             {
                 (meliItem && meliItemDescription) ?
-                    <ItemDetail item={meliItem} itemDescription={meliItemDescription} refreshItemCount={refreshItemCount}/> :
+                    <ItemDetail item={meliItem} itemDescription={meliItemDescription}/> :
                     <Loading/>
             }
         </>

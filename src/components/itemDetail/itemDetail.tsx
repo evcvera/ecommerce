@@ -7,11 +7,10 @@ import itemCountCart from "../../modelServices/itemCountCart";
 interface Props {
     item: IMeliSingleItem | undefined;
     itemDescription: IMeliItemDescription | undefined;
-    refreshItemCount: () => void;
 
 }
 
-const ItemDetail: React.FC<Props> = ({item, itemDescription, refreshItemCount}) => {
+const ItemDetail: React.FC<Props> = ({item, itemDescription}) => {
     const [count, setCount] = useState(0);
 
 
@@ -20,7 +19,6 @@ const ItemDetail: React.FC<Props> = ({item, itemDescription, refreshItemCount}) 
             itemCountCart.updateMap(item.id, amount);
             setCount(itemCountCart.getElementCount(item.id))
         }
-        refreshItemCount()
     }
 
     useEffect(() => {

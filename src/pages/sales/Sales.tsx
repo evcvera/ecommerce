@@ -5,12 +5,8 @@ import {IMeliSearch} from "../../models/interfaces/iMeliSearch";
 import Loading from "../../components/loading/Loading";
 import ItemListContainer from "../../components/itemListContainer/ItemListContainer";
 
-interface Props {
-    refreshItemCount: () => void;
-}
 
-
-const SalesPage: React.FC<Props> = ({refreshItemCount}) => {
+const SalesPage: React.FC = () => {
     let [meliSearch, setMeliSearch] = useState<IMeliSearch | undefined>(undefined);
     const {productSearch} = useParams<{ productSearch: string }>();
     const prevProductSearchRef = useRef<string>();
@@ -34,7 +30,7 @@ const SalesPage: React.FC<Props> = ({refreshItemCount}) => {
             {meliSearch?.results ?
                 (<div className="container">
                     <h1>{meliSearch?.query}</h1>
-                    <ItemListContainer items={meliSearch?.results} refreshItemCount={refreshItemCount}/>
+                    <ItemListContainer items={meliSearch?.results}/>
                 </div>) :
                 <Loading/>
             }

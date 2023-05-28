@@ -1,29 +1,29 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {ResultsEntity} from "../../models/interfaces/iMeliSearch";
 import {Link} from "react-router-dom";
 import itemCountCart from "../../modelServices/itemCountCart";
 import {Body} from "../../models/interfaces/iMeliItem";
 import buildImageService from "../../modelServices/buildImage";
+import {ProductContext} from "../../App";
 
 interface Props {
     item: ResultsEntity | Body;
-    refreshItemCount: () => void;
 }
 
-const Item: React.FC<Props> = ({item, refreshItemCount}) => {
-    const [count, setCount] = useState(0);
-
+const Item: React.FC<Props> = ({item}) => {
+    const [itemCount, setItemCount] = useState(0);
+    const { count, setContextCount } = useContext(ProductContext);
 
     function SetCount(amount: number) {
-        if (count + amount <= item.available_quantity) {
+        if (itemCount + amount <= item.available_quantity) {
             itemCountCart.updateMap(item.id, amount);
-            setCount(itemCountCart.getElementCount(item.id))
+            setItemCount(itemCountCart.getElementCount(item.id))
         }
-        refreshItemCount()
+        setContextCount()
     }
 
     useEffect(() => {
-        setCount(itemCountCart.getElementCount(item?.id))
+        setItemCount(itemCountCart.getElementCount(item?.id))
     }, [item]);
 
 
@@ -68,7 +68,7 @@ const Item: React.FC<Props> = ({item, refreshItemCount}) => {
                     <div className="btn-group" role="group">
                         <button onClick={() => SetCount(-1)} className="btn btn-secondary">-
                         </button>
-                        <span className="mx-2">{count}</span>
+                        <span className="mx-2">{itemCount}</span>
                         <button onClick={() => SetCount(1)} className="btn btn-secondary">+
                         </button>
                     </div>

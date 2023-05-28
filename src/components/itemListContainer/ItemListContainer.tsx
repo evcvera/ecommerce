@@ -4,14 +4,13 @@ import Item from "../item/Item";
 
 interface Props {
     items: ResultsEntity[];
-    refreshItemCount: () => void;
 }
 
-const ItemListContainer: React.FC<Props> = ({items, refreshItemCount}) => {
+const ItemListContainer: React.FC<Props> = ({items}) => {
     return (
         <div>
             {items.map((item) => (
-                <Item item={item} key={item.id} refreshItemCount={refreshItemCount}/>
+                <Item item={item} key={item.id} />
             ))}
         </div>
     )

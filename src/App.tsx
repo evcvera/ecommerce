@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, createContext} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import './App.css';
@@ -12,36 +12,48 @@ import ItemPage from "./pages/item/item";
 import CategoriesPage from "./pages/categories/Categories";
 import itemCountCart from "./modelServices/itemCountCart";
 
+interface ProductContextType {
+    count: number;
+    setContextCount: () => void;
+}
+
+export const ProductContext = createContext<ProductContextType>({
+    count: 0,
+    setContextCount: () => {
+    },
+});
+
 
 function App() {
-    const [itemCount, setItemCount] = useState(0);
+    const [count, setCount] = useState(0);
+
+    const setContextCount = () => {
+        setCount(itemCountCart.sumMapValues())
+        //setCount(prevCount => prevCount + 1);
+        //setCount(prevCount => (prevCount > 0 ? prevCount - 1 : 0));
+    };
 
     useEffect(() => {
-        setItemCount(itemCountCart.sumMapValues());
+        setContextCount();
     }, []);
-
-
-    const handleChildItemCount = () => {
-        setItemCount(itemCountCart.sumMapValues());
-    };
 
     return (
         <div className="App">
-            <>
-                <BrowserRouter>
-                    <NavBar itemCount={itemCount}/>
+            <BrowserRouter>
+                <ProductContext.Provider value={{count, setContextCount}}>
+                    <NavBar/>
                     <Routes>
                         <Route path="/" element={<LandingPage/>}/>
-                        <Route path="/cart" element={<CartPage refreshItemCount={handleChildItemCount}/>}/>
+                        <Route path="/cart" element={<CartPage/>}/>
                         <Route path="/favorites" element={<FavoritesPage/>}/>
                         <Route path="/sales/:productSearch"
-                               element={<SalesPage refreshItemCount={handleChildItemCount}/>}/>
-                        <Route path="/item/:id" element={<ItemPage refreshItemCount={handleChildItemCount}/>}/>
+                               element={<SalesPage/>}/>
+                        <Route path="/item/:id" element={<ItemPage/>}/>
                         <Route path="/categories" element={<CategoriesPage/>}/>
                         <Route path="*" element={<NotFoundPage/>}/>
                     </Routes>
-                </BrowserRouter>
-            </>
+                </ProductContext.Provider>
+            </BrowserRouter>
         </div>
     );
 }

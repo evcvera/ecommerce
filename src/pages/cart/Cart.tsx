@@ -1,17 +1,17 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import itemCountCart from "../../modelServices/itemCountCart";
 import meliSearchService from "../../services/meliSearchService";
 import Item from "../../components/item/Item";
 import {IMeliItem} from "../../models/interfaces/iMeliItem";
 import Loading from "../../components/loading/Loading";
+import {ProductContext} from "../../App";
 
-interface Props {
-    refreshItemCount: () => void;
-}
 
-const CartPage: React.FC<Props> = ({refreshItemCount}) => {
+const CartPage: React.FC = () => {
     let [meliSearch, setMeliSearch] = useState<IMeliItem[] | undefined>(undefined);
     const prevProductSearchRef = useRef<string>();
+
+    const { count } = useContext(ProductContext);
 
     useEffect(() => {
         setMeliSearch(undefined);
@@ -33,21 +33,25 @@ const CartPage: React.FC<Props> = ({refreshItemCount}) => {
     }, []);
 
 
+
     return (
         (
-            <div className={"py-4 container"}>
-                <h1>Mi Carrito</h1>
-                {meliSearch && meliSearch.length > 0 ?
-                    meliSearch?.map((item, i) => (
-                        <div key={i}>{
-                            ((item?.body && item?.body?.id) &&
-                                <Item item={item?.body} refreshItemCount={refreshItemCount}/>)
-                        }
-                        </div>
-                    )) :
-                    <Loading/>
-                }
-            </div>
+            <>
+                <div className={"py-4 container"}>
+                    <h1>Mi Carrito {count}</h1>
+                    {meliSearch && meliSearch.length > 0 ?
+                        meliSearch?.map((item, i) => (
+                            <div key={i}>{
+                                ((item?.body && item?.body?.id) &&
+                                    <Item item={item?.body}/>)
+                            }
+                            </div>
+                        )) :
+                        <Loading/>
+                    }
+                </div>
+            </>
+
         ));
 };
 
