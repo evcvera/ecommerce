@@ -7,10 +7,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import CartWidget from "../cartWidget/CartWidget";
-import {ProductContext} from "../../App";
+import {CartContext} from "../../App";
 
 const NavBar: React.FC = () => {
-    const { count } = useContext(ProductContext);
+    const { count } = useContext(CartContext);
     const location = useLocation();
     const navigate = useNavigate();
 

@@ -23,6 +23,8 @@ export interface Paging {
 }
 
 export interface ResultsEntity {
+    description?: string;
+    category?: string;
     id: string;
     site_id: string;
     title: string;

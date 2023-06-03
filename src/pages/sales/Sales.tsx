@@ -4,6 +4,7 @@ import meliSearchService from '../../services/meliSearchService'
 import {IMeliSearch} from "../../models/interfaces/iMeliSearch";
 import Loading from "../../components/loading/Loading";
 import ItemListContainer from "../../components/itemListContainer/ItemListContainer";
+import productService from "../../services/productService";
 
 
 const SalesPage: React.FC = () => {
@@ -15,10 +16,21 @@ const SalesPage: React.FC = () => {
         setMeliSearch(undefined);
         if (productSearch && productSearch !== prevProductSearchRef.current) {
             prevProductSearchRef.current = productSearch;
-            meliSearchService.searchItems(productSearch)
+            //busqueda meli
+            /*meliSearchService.searchItems(productSearch)
                 .then((ms) => {
                     setMeliSearch(ms);
                 })
+                .catch((error) => {
+                    console.error(error)
+                });*/
+
+            productService.searchItems(productSearch).then((ms) => {
+                const item: IMeliSearch = {
+                   results: ms
+                };
+                setMeliSearch(item);
+            })
                 .catch((error) => {
                     console.error(error)
                 });

@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import itemCountCart from "../../modelServices/itemCountCart";
 import {Body} from "../../models/interfaces/iMeliItem";
 import buildImageService from "../../modelServices/buildImage";
-import {ProductContext} from "../../App";
+import {CartContext} from "../../App";
 
 interface Props {
     item: ResultsEntity | Body;
@@ -12,7 +12,7 @@ interface Props {
 
 const Item: React.FC<Props> = ({item}) => {
     const [itemCount, setItemCount] = useState(0);
-    const { count, setContextCount } = useContext(ProductContext);
+    const { count, setContextCount } = useContext(CartContext);
 
     function SetCount(amount: number) {
         if (itemCount + amount <= item.available_quantity) {

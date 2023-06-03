@@ -4,28 +4,26 @@ import meliSearchService from "../../services/meliSearchService";
 import Item from "../../components/item/Item";
 import {IMeliItem} from "../../models/interfaces/iMeliItem";
 import Loading from "../../components/loading/Loading";
-import {ProductContext} from "../../App";
+import {CartContext} from "../../App";
+import productService from "../../services/productService";
+import {ResultsEntity} from "../../models/interfaces/iMeliSearch";
 
 
 const CartPage: React.FC = () => {
-    let [meliSearch, setMeliSearch] = useState<IMeliItem[] | undefined>(undefined);
-    const prevProductSearchRef = useRef<string>();
-
-    const { count } = useContext(ProductContext);
+    let [meliSearch, setMeliSearch] = useState<ResultsEntity[] | undefined>(undefined);
+    const prevProductSearchRef = useRef<string[]>();
+    let myArray = itemCountCart.getMapKeys();
+    const {count} = useContext(CartContext);
 
     useEffect(() => {
         setMeliSearch(undefined);
-        let myArray = itemCountCart.getMapKeys().join(",");
         prevProductSearchRef.current = myArray;
         if (myArray.length > 0) {
-            meliSearchService.favouriteItems(myArray)
-                .then((ms) => {
-                    if (ms) {
-                        // @ts-ignore
-                        ms.sort((a, b) => a.body?.price - b.body?.price);
-                        setMeliSearch(ms)
-                    }
-                })
+            productService.searchItemsById(myArray).then((ms) => {
+                setMeliSearch(ms);
+
+                console.log(ms)
+            })
                 .catch((error) => {
                     console.error(error)
                 });
@@ -33,23 +31,26 @@ const CartPage: React.FC = () => {
     }, []);
 
 
-
     return (
         (
-            <>
-                <div className={"py-4 container"}>
-                    <h1>Mi Carrito {count}</h1>
-                    {meliSearch && meliSearch.length > 0 ?
-                        meliSearch?.map((item, i) => (
-                            <div key={i}>{
-                                ((item?.body && item?.body?.id) &&
-                                    <Item item={item?.body}/>)
-                            }
-                            </div>
-                        )) :
-                        <Loading/>
-                    }
-                </div>
+            <>  {
+                myArray.length > 0 ?
+                    <div className={"py-4 container"}>
+                        <h1>Mi Carrito {count}</h1>
+                        {(meliSearch && meliSearch.length > 0) ?
+                            meliSearch?.map((item, i) => (
+                                <div key={i}>{
+                                    <Item item={item}/>
+                                }
+                                </div>
+                            )) :
+                            <Loading/>
+                        }
+                    </div> :
+                    <div>
+                        <h1>Opps, no tenes items en tu carrito.</h1>
+                    </div>
+            }
             </>
 
         ));

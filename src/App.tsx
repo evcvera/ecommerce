@@ -12,12 +12,13 @@ import ItemPage from "./pages/item/item";
 import CategoriesPage from "./pages/categories/Categories";
 import itemCountCart from "./modelServices/itemCountCart";
 
+
 interface ProductContextType {
     count: number;
     setContextCount: () => void;
 }
 
-export const ProductContext = createContext<ProductContextType>({
+export const CartContext = createContext<ProductContextType>({
     count: 0,
     setContextCount: () => {
     },
@@ -40,7 +41,7 @@ function App() {
     return (
         <div className="App">
             <BrowserRouter>
-                <ProductContext.Provider value={{count, setContextCount}}>
+                <CartContext.Provider value={{count, setContextCount}}>
                     <NavBar/>
                     <Routes>
                         <Route path="/" element={<LandingPage/>}/>
@@ -52,7 +53,7 @@ function App() {
                         <Route path="/categories" element={<CategoriesPage/>}/>
                         <Route path="*" element={<NotFoundPage/>}/>
                     </Routes>
-                </ProductContext.Provider>
+                </CartContext.Provider>
             </BrowserRouter>
         </div>
     );

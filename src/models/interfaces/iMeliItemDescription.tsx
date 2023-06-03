@@ -1,9 +1,9 @@
 export interface IMeliItemDescription {
-    text:         string;
-    plain_text:   string;
-    last_updated: Date;
-    date_created: Date;
-    snapshot:     Snapshot;
+    text?:         string;
+    plain_text?:   string;
+    last_updated?: Date;
+    date_created?: Date;
+    snapshot?:     Snapshot;
 }
 
 export interface Snapshot {

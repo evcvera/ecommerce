@@ -3,14 +3,14 @@ import {Link} from "react-router-dom";
 import {IMeliSingleItem} from "../../models/interfaces/iMeliSingleItem";
 import {IMeliItemDescription} from "../../models/interfaces/iMeliItemDescription";
 import itemCountCart from "../../modelServices/itemCountCart";
+import {ResultsEntity} from "../../models/interfaces/iMeliSearch";
 
 interface Props {
-    item: IMeliSingleItem | undefined;
-    itemDescription: IMeliItemDescription | undefined;
+    item: ResultsEntity | undefined;
 
 }
 
-const ItemDetail: React.FC<Props> = ({item, itemDescription}) => {
+const ItemDetail: React.FC<Props> = ({item}) => {
     const [count, setCount] = useState(0);
 
 
@@ -29,11 +29,11 @@ const ItemDetail: React.FC<Props> = ({item, itemDescription}) => {
 
     return (
         <div className="container py-5">
-            {(item && itemDescription) &&
+            {(item) &&
             <>
                 <div className="row">
                     <div className="col-md-7">
-                        {item.pictures && <img src={item.pictures[0].url} alt={item.title} className="img-fluid"/>}
+                        {item?.thumbnail && <img src={item?.thumbnail} alt={item.title} className="img-fluid"/>}
                     </div>
                     <div className="col-md-5">
                         <h2 className="fw-bold">{item.title}</h2>
@@ -62,7 +62,7 @@ const ItemDetail: React.FC<Props> = ({item, itemDescription}) => {
                 </div>
                 <div className="py-5">
                     <h3 className="fw-bold">Descripción del producto</h3>
-                    <p className="text-muted">{itemDescription.plain_text}</p>
+                    <p className="text-muted">{item.description}</p>
                 </div>
             </>
             }
