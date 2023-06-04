@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
-import {IMeliSingleItem} from "../../models/interfaces/iMeliSingleItem";
-import {IMeliItemDescription} from "../../models/interfaces/iMeliItemDescription";
 import itemCountCart from "../../modelServices/itemCountCart";
 import {ResultsEntity} from "../../models/interfaces/iMeliSearch";
 

@@ -1,6 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {useParams} from "react-router-dom";
-import meliSearchService from '../../services/meliSearchService'
 import {IMeliSearch} from "../../models/interfaces/iMeliSearch";
 import Loading from "../../components/loading/Loading";
 import ItemListContainer from "../../components/itemListContainer/ItemListContainer";
@@ -16,15 +15,6 @@ const SalesPage: React.FC = () => {
         setMeliSearch(undefined);
         if (productSearch && productSearch !== prevProductSearchRef.current) {
             prevProductSearchRef.current = productSearch;
-            //busqueda meli
-            /*meliSearchService.searchItems(productSearch)
-                .then((ms) => {
-                    setMeliSearch(ms);
-                })
-                .catch((error) => {
-                    console.error(error)
-                });*/
-
             productService.searchItems(productSearch).then((ms) => {
                 const item: IMeliSearch = {
                    results: ms

@@ -1,9 +1,10 @@
 import {IMeliSearch, ResultsEntity} from "../models/interfaces/iMeliSearch";
 import {IMeliItem} from "../models/interfaces/iMeliItem";
-import searchItemDescription from "./meliItemDescriptionService";
 import {collection, addDoc, query, where, getDocs, setDoc, doc} from 'firebase/firestore';
+import {IMeliItemDescription} from "../models/interfaces/iMeliItemDescription";
 
 
+//Usado para migrar la busquedas de productos en meli a firebase.
 class MeliSearchService {
     async searchItems(search: string): Promise<IMeliSearch> {
         return fetch(`https://api.mercadolibre.com/sites/MLA/search?q=${search}&offset=0`)
@@ -16,7 +17,7 @@ class MeliSearchService {
             .then((data: IMeliSearch) => {
                 // TODO almacena busquedas
                 /*data.results?.forEach(item => {
-                    searchItemDescription.searchItemDescription(item.id).then(description => {
+                    this.searchItemDescription(item.id).then(description => {
                         item.description = description.plain_text;
                         item.category = search;
                         storeProducts(item);
@@ -38,9 +39,22 @@ class MeliSearchService {
                 return data
             })
     }
+
+    async searchItemDescription(id: string): Promise<IMeliItemDescription> {
+        return fetch(`https://api.mercadolibre.com/items/${id}/description`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(response.statusText);
+                }
+                return response.json();
+            })
+            .then((data: IMeliItemDescription) => {
+                return data;
+            });
+    }
 }
 
-//Almacena en firebase
+//Usado para migrar la busquedas de productos en meli a firebase.
 const storeProducts = async (product: ResultsEntity): Promise<void> => {
     try {
         const db = (window as any).db;
