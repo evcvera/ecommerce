@@ -9,6 +9,7 @@ import SalesPage from "./pages/sales/Sales";
 import ItemPage from "./pages/item/item";
 import CategoriesPage from "./pages/categories/Categories";
 import itemCountCart from "./modelServices/itemCountCart";
+import NotFoundPage from "./pages/notFound/notFound";
 
 
 interface ProductContextType {
@@ -46,6 +47,7 @@ function App() {
                                element={<SalesPage/>}/>
                         <Route path="/item/:id" element={<ItemPage/>}/>
                         <Route path="/categories" element={<CategoriesPage/>}/>
+                        <Route path="*" element={<NotFoundPage/>}/>
                     </Routes>
                 </CartContext.Provider>
             </BrowserRouter>
