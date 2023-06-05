@@ -31,7 +31,7 @@ const CartPage: React.FC = () => {
             <>  {
                 myArray.length > 0 ?
                     <div className={"py-4 container"}>
-                        <h1>Mi Carrito {countAndTotal.countAndTotal.count}</h1>
+                        <h1>Mi Carrito {countAndTotal.countAndTotal.count} Items</h1>
                         <h1>Monto Total a pagar ${countAndTotal.countAndTotal.sum}</h1>
                         <Link to="/checkout">
                             <button className="btn btn-primary mt-4">Comprar ahora</button>

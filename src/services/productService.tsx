@@ -25,7 +25,7 @@ class ProductService {
             try {
                 const db = (window as any).db;
                 const collectionRef = collection(db, 'product');
-                const q = query(collectionRef, where('id', 'in', ids), limit(20));
+                const q = query(collectionRef, where('id', 'in', ids), limit(50));
                 const querySnapshot = await getDocs(q);
                 const items = querySnapshot.docs.map((doc) => doc.data());
                 resolve(items);

@@ -22,6 +22,12 @@ const TicketsPage: React.FC = () => {
         }
     }, [id]);
 
+    const parseTimestampToString = (timestamp: any): string => {
+        const date = new Date(timestamp.seconds * 1000);
+        return date.toLocaleString();
+    };
+
+
     return (
         <div className="container">
             {postTicket &&
@@ -30,7 +36,7 @@ const TicketsPage: React.FC = () => {
                     <div className="ticket-header">
                         <h3>Ticket de Compra</h3>
                         <p>ID: {id}</p>
-                        <p>Fecha: {postTicket?.createdOn.toString()}</p>
+                        <p>Fecha: {parseTimestampToString(postTicket?.createdOn)}</p>
                     </div>
 
                     <div className="ticket-body">
