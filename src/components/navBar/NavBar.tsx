@@ -10,7 +10,7 @@ import CartWidget from "../cartWidget/CartWidget";
 import {CartContext} from "../../App";
 
 const NavBar: React.FC = () => {
-    const { count } = useContext(CartContext);
+    const countAndTotal = useContext(CartContext);
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -42,6 +42,7 @@ const NavBar: React.FC = () => {
                                 <div className="d-md-none d-sm-none d-none  d-lg-block">Home</div>
                             </Link>
                         </li>
+
                         <li className="nav-item header-item">
                             <Link to="/categories"
                                   className={`nav-link ${location.pathname === '/categories' ? ' text-white' : ''}`}>
@@ -53,7 +54,7 @@ const NavBar: React.FC = () => {
                         <li className="nav-item header-item">
                             <Link to="/cart"
                                   className={`nav-link ${location.pathname === '/cart' ? ' text-white' : ''}`}>
-                               <CartWidget itemCount={count}/>
+                                <CartWidget itemCount={countAndTotal.countAndTotal.count}/>
                                 <div className="d-md-none d-sm-none d-none  d-lg-block">Cart</div>
                             </Link>
                         </li>

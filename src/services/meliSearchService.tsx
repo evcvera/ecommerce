@@ -16,13 +16,13 @@ class MeliSearchService {
             })
             .then((data: IMeliSearch) => {
                 // TODO almacena busquedas
-                /*data.results?.forEach(item => {
+                data.results?.forEach(item => {
                     this.searchItemDescription(item.id).then(description => {
                         item.description = description.plain_text;
                         item.category = search;
                         storeProducts(item);
                     })
-                })*/
+                });
                 return data
             })
     }
@@ -64,15 +64,13 @@ const storeProducts = async (product: ResultsEntity): Promise<void> => {
 
         if (querySnapshot.empty) {
             await addDoc(collectionRef, product);
-            console.log(`Producto ${product.id} almacenado correctamente.`);
         } else {
             const docId = querySnapshot.docs[0].id;
             await setDoc(doc(collectionRef, docId), product);
-            console.log(`Producto ${product.id} actualizado correctamente.`);
         }
 
     } catch (error) {
-        console.log('Error almacenando los productos:', error);
+        console.log(error);
     }
 };
 

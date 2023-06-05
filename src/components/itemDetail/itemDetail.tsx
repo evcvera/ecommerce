@@ -1,7 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
 import itemCountCart from "../../modelServices/itemCountCart";
 import {ResultsEntity} from "../../models/interfaces/iMeliSearch";
+import {CartContext} from "../../App";
 
 interface Props {
     item: ResultsEntity | undefined;
@@ -10,13 +11,15 @@ interface Props {
 
 const ItemDetail: React.FC<Props> = ({item}) => {
     const [count, setCount] = useState(0);
+    const { countAndTotal, setContextCount } = useContext(CartContext);
 
+    function SetCount(amount: number,  title: string, price: number) {
 
-    function SetCount(amount: number) {
         if (item?.available_quantity && count + amount <= item?.available_quantity) {
-            itemCountCart.updateMap(item.id, amount);
+            itemCountCart.updateMap(item.id, amount, title, price);
             setCount(itemCountCart.getElementCount(item.id))
         }
+        setContextCount()
     }
 
     useEffect(() => {
@@ -47,10 +50,10 @@ const ItemDetail: React.FC<Props> = ({item}) => {
                         <div className="mt-2">
                             <div className="d-flex flex-column align-items-center">
                                 <div className="btn-group" role="group">
-                                    <button onClick={() => SetCount(-1)} className="btn btn-secondary">-
+                                    <button onClick={() => SetCount(-1, item?.title, item?.price )} className="btn btn-secondary">-
                                     </button>
                                     <span className="mx-2">{count}</span>
-                                    <button onClick={() => SetCount(1)} className="btn btn-secondary">+
+                                    <button onClick={() => SetCount(1, item?.title, item?.price)} className="btn btn-secondary">+
                                     </button>
                                 </div>
                             </div>

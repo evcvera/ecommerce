@@ -11,8 +11,7 @@ const LandingPage: React.FC = () => {
                 <div className="row align-items-center">
                     <div className="col-md-6">
                         <h1>Bienvenido a Ecommerce</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod dui vitae urna iaculis,
-                            vel malesuada magna venenatis. Nunc tempor diam eu gravida tempus.</p>
+                        <p>Puedes buscar los siguientes productos: teclado, mouse, monitor, zapato, cocina, ropa, heladera</p>
                         <button className="btn btn-primary">Learn More</button>
                     </div>
                     <div className="col-md-6">

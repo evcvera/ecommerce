@@ -12,11 +12,11 @@ interface Props {
 
 const Item: React.FC<Props> = ({item}) => {
     const [itemCount, setItemCount] = useState(0);
-    const { count, setContextCount } = useContext(CartContext);
+    const { countAndTotal, setContextCount } = useContext(CartContext);
 
-    function SetCount(amount: number) {
-        if (itemCount + amount <= item.available_quantity) {
-            itemCountCart.updateMap(item.id, amount);
+    function SetCount(count: number, title: string, price: number) {
+        if (itemCount + count <= item.available_quantity) {
+            itemCountCart.updateMap(item.id, count, title, price);
             setItemCount(itemCountCart.getElementCount(item.id))
         }
         setContextCount()
@@ -66,10 +66,10 @@ const Item: React.FC<Props> = ({item}) => {
             <div className="col-md-1 d-flex align-items-center justify-content-center">
                 <div className="d-flex flex-column align-items-center">
                     <div className="btn-group" role="group">
-                        <button onClick={() => SetCount(-1)} className="btn btn-secondary">-
+                        <button onClick={() => SetCount(-1, item?.title, item?.price )} className="btn btn-secondary">-
                         </button>
                         <span className="mx-2">{itemCount}</span>
-                        <button onClick={() => SetCount(1)} className="btn btn-secondary">+
+                        <button onClick={() => SetCount(1, item?.title, item?.price)} className="btn btn-secondary">+
                         </button>
                     </div>
                 </div>

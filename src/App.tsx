@@ -10,25 +10,25 @@ import ItemPage from "./pages/item/item";
 import CategoriesPage from "./pages/categories/Categories";
 import itemCountCart from "./modelServices/itemCountCart";
 import NotFoundPage from "./pages/notFound/notFound";
+import {IProductCountAndTotal} from "./models/interfaces/iItemLocalStorage";
+import PaymentFormPage from "./pages/checkoutForm/checkoutForm";
+import TicketsPage from "./pages/tickets/Tickets";
 
-
-interface ProductContextType {
-    count: number;
+interface IProductCountAndTotalContext {
+    countAndTotal: IProductCountAndTotal;
     setContextCount: () => void;
 }
-
-export const CartContext = createContext<ProductContextType>({
-    count: 0,
+export const CartContext = createContext<IProductCountAndTotalContext>({
+    countAndTotal: {count: 0, sum: 0},
     setContextCount: () => {
     },
 });
 
-
 function App() {
-    const [count, setCount] = useState(0);
+    const [countAndTotal, setCountAndTotal] = useState({count: 0, sum: 0});
 
     const setContextCount = () => {
-        setCount(itemCountCart.sumMapValues())
+        setCountAndTotal(itemCountCart.sumMapValues())
     };
 
     useEffect(() => {
@@ -38,15 +38,16 @@ function App() {
     return (
         <div className="App">
             <BrowserRouter>
-                <CartContext.Provider value={{count, setContextCount}}>
+                <CartContext.Provider value={{countAndTotal, setContextCount}}>
                     <NavBar/>
                     <Routes>
                         <Route path="/" element={<LandingPage/>}/>
                         <Route path="/cart" element={<CartPage/>}/>
-                        <Route path="/sales/:productSearch"
-                               element={<SalesPage/>}/>
+                        <Route path="/sales/:productSearch" element={<SalesPage/>}/>
                         <Route path="/item/:id" element={<ItemPage/>}/>
                         <Route path="/categories" element={<CategoriesPage/>}/>
+                        <Route path="/checkout" element={<PaymentFormPage/>}/>
+                        <Route path="/checkout/ticket/:id" element={<TicketsPage/>}/>
                         <Route path="*" element={<NotFoundPage/>}/>
                     </Routes>
                 </CartContext.Provider>
