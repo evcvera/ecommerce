@@ -58,6 +58,14 @@ const NavBar: React.FC = () => {
                                 <div className="d-md-none d-sm-none d-none  d-lg-block">Cart</div>
                             </Link>
                         </li>
+
+                        <li className="nav-item header-item">
+                            <Link to="/tickets"
+                                  className={`nav-link ${location.pathname === '/tickets' ? ' text-white' : ''}`}>
+                                <i className="bi bi-ticket-detailed"/>
+                                <div className="d-md-none d-sm-none d-none  d-lg-block">Tickets</div>
+                            </Link>
+                        </li>
                     </ul>
                 </div>
             </nav>

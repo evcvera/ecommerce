@@ -1,60 +1,43 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {useParams} from "react-router-dom";
-import Ticket from "../../components/ticket/ticket";
 import ticketService from "../../services/ticketService";
 import {IPostTicket} from "../../models/interfaces/iItemLocalStorage";
+import ticketsLocalStorageService from "../../modelServices/ticketsLocalStorage";
+import PostTicket from "../../components/postTicket/postTicket";
+import Loading from "../../components/loading/Loading";
 
 const TicketsPage: React.FC = () => {
-    const {id} = useParams<{ id: string }>();
-    const prevProductSearchRef = useRef<string>();
-    const [postTicket, setPostTicket] = useState<IPostTicket | undefined>();
+    const [Tickets, setPostTickets] = useState<IPostTicket[] | undefined>();
+    const [ticketsID, setTicketsID] = useState<string[] | undefined>();
 
     useEffect(() => {
-        if (id && id !== prevProductSearchRef.current) {
-            ticketService.searchItemById(id).then((pt) => {
+        let ticketIDS = ticketsLocalStorageService.getTickets();
+        setTicketsID(ticketIDS)
+        if (ticketIDS.length > 0) {
+            ticketService.searchItemsByIds(ticketIDS).then((pt) => {
                 if (pt) {
-                    setPostTicket(pt);
+                    setPostTickets(pt);
                     return
                 }
             }).catch((error) => {
                 console.error(error)
             });
         }
-    }, [id]);
-
-    const parseTimestampToString = (timestamp: any): string => {
-        const date = new Date(timestamp.seconds * 1000);
-        return date.toLocaleString();
-    };
-
+    }, []);
 
     return (
         <div className="container">
-            {postTicket &&
+            {(ticketsID && ticketsID.length > 0 && Tickets) &&
             <>
-                <div className="ticket">
-                    <div className="ticket-header">
-                        <h3>Ticket de Compra</h3>
-                        <p>ID: {id}</p>
-                        <p>Fecha: {parseTimestampToString(postTicket?.createdOn)}</p>
-                    </div>
-
-                    <div className="ticket-body">
-                        <h4>Información del Usuario</h4>
-                        <p>Nombre: {postTicket.user.fullName}</p>
-                        <p>Dirección: {postTicket.user.address}</p>
-                        <p>Teléfono: {postTicket.user.phone}</p>
-                        <p>Email: {postTicket.user.email}</p>
-                        <p>Email de Confirmación: {postTicket.user.confirmEmail}</p>
-                    </div>
-
-                    <div className="ticket-footer">
-                        <h4>Detalles de los Productos</h4>
-                        <Ticket items={postTicket?.items}/>
-                    </div>
-                </div>
-
+                {Tickets.map((item) => (
+                    <PostTicket postTicket={item} key={item.id}/>
+                ))}
             </>
+            }
+            {(ticketsID && ticketsID.length === 0 && !Tickets) &&
+            <h1>No tienes tickets</h1>
+            }
+            {(ticketsID && ticketsID.length > 0 && !Tickets) &&
+            <Loading/>
             }
         </div>
     )

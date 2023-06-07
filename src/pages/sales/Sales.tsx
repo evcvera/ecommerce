@@ -16,8 +16,9 @@ const SalesPage: React.FC = () => {
         setMeliSearch(undefined);
         if (productSearch && productSearch !== prevProductSearchRef.current) {
             prevProductSearchRef.current = productSearch;
-            //meliSearchService.searchItems(productSearch);
-            productService.searchItems(productSearch).then((ms) => {
+            let search = prevProductSearchRef.current.toLowerCase();
+            //meliSearchService.searchItems(search);
+            productService.searchItems(search).then((ms) => {
                 const item: IMeliSearch = {
                     results: ms
                 };

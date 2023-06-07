@@ -5,7 +5,7 @@ interface TicketProps {
     items: IItemLocalStorage[];
 }
 
-const Ticket: React.FC<TicketProps> = ({items}) => {
+const PreTicket: React.FC<TicketProps> = ({items}) => {
     const calculateTotal = () => {
         let total = 0;
         items.forEach((item) => {
@@ -49,4 +49,4 @@ const Ticket: React.FC<TicketProps> = ({items}) => {
     );
 };
 
-export default Ticket;
+export default PreTicket;

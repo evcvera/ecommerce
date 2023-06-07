@@ -1,4 +1,4 @@
-import {addDoc, collection, getDocs, query, where} from 'firebase/firestore';
+import {addDoc, collection, getDocs, limit, query, where} from 'firebase/firestore';
 import {IPostTicket} from "../models/interfaces/iItemLocalStorage";
 
 class TicketService {
@@ -17,22 +17,40 @@ class TicketService {
     }
 
     async searchItemById(id: string): Promise<IPostTicket | undefined> {
-        try {
-            const db = (window as any).db;
-            const collectionRef = collection(db, 'ticket');
-            const q = query(collectionRef, where('id', '==', id));
-            const querySnapshot = await getDocs(q);
+        return new Promise<any>(async (resolve, reject) => {
+            try {
+                const db = (window as any).db;
+                const collectionRef = collection(db, 'ticket');
+                const q = query(collectionRef, where('id', '==', id));
+                const querySnapshot = await getDocs(q);
 
-            if (querySnapshot.empty) {
+                if (querySnapshot.empty) {
+                    return undefined;
+                }
+
+                const firstDocument = querySnapshot.docs[0];
+                resolve(firstDocument.data() as IPostTicket);
+            } catch (error) {
+                console.error('Error searching for item:', error);
                 return undefined;
             }
+        });
+    }
 
-            const firstDocument = querySnapshot.docs[0];
-            return firstDocument.data() as IPostTicket;
-        } catch (error) {
-            console.error('Error searching for item:', error);
-            return undefined;
-        }
+    async searchItemsByIds(ids: string[]): Promise<IPostTicket[] | undefined> {
+        return new Promise<any>(async (resolve, reject) => {
+            try {
+                const db = (window as any).db;
+                const collectionRef = collection(db, 'ticket');
+                const q = query(collectionRef, where('id', 'in', ids), limit(50));
+                const querySnapshot = await getDocs(q);
+                const items = querySnapshot.docs.map((doc) => doc.data());
+                resolve(items);
+            } catch (error) {
+                console.error('Error searching for item:', error);
+                return undefined;
+            }
+        });
     }
 }
 

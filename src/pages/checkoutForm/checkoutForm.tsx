@@ -2,15 +2,18 @@ import React, {useContext, useState} from 'react';
 import {IFormValue} from "../../models/interfaces/iFormValue";
 import userInfoService from "../../modelServices/userInfo";
 import itemCountCart from "../../modelServices/itemCountCart";
-import Ticket from "../../components/ticket/ticket";
+import PreTicket from "../../components/ticket/preTicket";
 import {CartContext} from "../../App";
 import ticketService from "../../services/ticketService";
 import {IPostTicket} from "../../models/interfaces/iItemLocalStorage";
 import {useNavigate} from "react-router-dom";
+import ticketsLocalStorageService from "../../modelServices/ticketsLocalStorage";
+import Loading from "../../components/loading/Loading";
 
 const PaymentFormPage: React.FC = () => {
     const formStorage = userInfoService.getFormValue();
     const [isPayed, setIsPayed] = useState<boolean>(false)
+    const [loaderFlag, setLoaderFlag] = useState<boolean>(false)
     const itemsTicket = itemCountCart.getMap();
     const {countAndTotal, setContextCount} = useContext(CartContext);
     const navigate = useNavigate();
@@ -94,10 +97,12 @@ const PaymentFormPage: React.FC = () => {
                 createdOn: new Date(),
                 user: formValues,
             };
+            setLoaderFlag(true)
             ticketService.storeTicket(ticket).then(x => {
                 setIsPayed(true);
                 itemCountCart.removeMap();
                 setContextCount();
+                ticketsLocalStorageService.addString(id);
                 navigate(`ticket/${id}`);
             })
         }
@@ -111,76 +116,81 @@ const PaymentFormPage: React.FC = () => {
 
     return (
         <div className="container">
-            {!isPayed ?
+            {!loaderFlag ?
                 <>
-                    <Ticket items={itemsTicket}/>
-                    <h1>"Complete para realizar pago"</h1>
+                    {!isPayed ?
+                        <>
+                            <PreTicket items={itemsTicket}/>
+                            <h1>"Complete para realizar pago"</h1>
 
-                    <form onSubmit={handleSubmit}>
-                        <div className="form-group">
-                            <label>Full Name</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                name="fullName"
-                                value={formValues.fullName}
-                                onChange={handleChange}
-                            />
-                            {errors.fullName && <small className="text-danger">{errors.fullName}</small>}
-                        </div>
+                            <form onSubmit={handleSubmit}>
+                                <div className="form-group">
+                                    <label>Full Name</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        name="fullName"
+                                        value={formValues.fullName}
+                                        onChange={handleChange}
+                                    />
+                                    {errors.fullName && <small className="text-danger">{errors.fullName}</small>}
+                                </div>
 
-                        <div className="form-group">
-                            <label>Address</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                name="address"
-                                value={formValues.address}
-                                onChange={handleChange}
-                            />
-                            {errors.address && <small className="text-danger">{errors.address}</small>}
-                        </div>
+                                <div className="form-group">
+                                    <label>Address</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        name="address"
+                                        value={formValues.address}
+                                        onChange={handleChange}
+                                    />
+                                    {errors.address && <small className="text-danger">{errors.address}</small>}
+                                </div>
 
-                        <div className="form-group">
-                            <label>Phone Number</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                name="phone"
-                                value={formValues.phone}
-                                onChange={handleChange}
-                            />
-                            {errors.phone && <small className="text-danger">{errors.phone}</small>}
-                        </div>
+                                <div className="form-group">
+                                    <label>Phone Number</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        name="phone"
+                                        value={formValues.phone}
+                                        onChange={handleChange}
+                                    />
+                                    {errors.phone && <small className="text-danger">{errors.phone}</small>}
+                                </div>
 
-                        <div className="form-group">
-                            <label>Email</label>
-                            <input
-                                type="email"
-                                className="form-control"
-                                name="email"
-                                value={formValues.email}
-                                onChange={handleChange}
-                            />
-                            {errors.email && <small className="text-danger">{errors.email}</small>}
-                        </div>
+                                <div className="form-group">
+                                    <label>Email</label>
+                                    <input
+                                        type="email"
+                                        className="form-control"
+                                        name="email"
+                                        value={formValues.email}
+                                        onChange={handleChange}
+                                    />
+                                    {errors.email && <small className="text-danger">{errors.email}</small>}
+                                </div>
 
-                        <div className="form-group">
-                            <label>Confirm Email</label>
-                            <input
-                                type="email"
-                                className="form-control"
-                                name="confirmEmail"
-                                value={formValues.confirmEmail}
-                                onChange={handleChange}
-                            />
-                            {errors.confirmEmail && <small className="text-danger">{errors.confirmEmail}</small>}
-                        </div>
+                                <div className="form-group">
+                                    <label>Confirm Email</label>
+                                    <input
+                                        type="email"
+                                        className="form-control"
+                                        name="confirmEmail"
+                                        value={formValues.confirmEmail}
+                                        onChange={handleChange}
+                                    />
+                                    {errors.confirmEmail &&
+                                    <small className="text-danger">{errors.confirmEmail}</small>}
+                                </div>
 
-                        <button type="submit" className="btn btn-primary">Realizar pago</button>
-                    </form>
+                                <button type="submit" className="btn btn-primary">Realizar pago</button>
+                            </form>
+                        </> :
+                        <h1> "Pago realizado con exito"</h1>}
                 </> :
-                <h1> "Pago realizado con exito"</h1>}
+                <Loading/>}
         </div>
     );
 }

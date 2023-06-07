@@ -47,7 +47,7 @@ const CartPage: React.FC = () => {
                         }
                     </div> :
                     <div>
-                        <h1>Opps, no tenes items en tu carrito.</h1>
+                        <h1 className={"mt-4"}>Opps, no tenes items en tu carrito.</h1>
                     </div>
             }
             </>

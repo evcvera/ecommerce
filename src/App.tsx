@@ -12,6 +12,7 @@ import itemCountCart from "./modelServices/itemCountCart";
 import NotFoundPage from "./pages/notFound/notFound";
 import {IProductCountAndTotal} from "./models/interfaces/iItemLocalStorage";
 import PaymentFormPage from "./pages/checkoutForm/checkoutForm";
+import TicketPage from "./pages/ticket/Ticket";
 import TicketsPage from "./pages/tickets/Tickets";
 
 interface IProductCountAndTotalContext {
@@ -47,7 +48,8 @@ function App() {
                         <Route path="/item/:id" element={<ItemPage/>}/>
                         <Route path="/categories" element={<CategoriesPage/>}/>
                         <Route path="/checkout" element={<PaymentFormPage/>}/>
-                        <Route path="/checkout/ticket/:id" element={<TicketsPage/>}/>
+                        <Route path="/checkout/ticket/:id" element={<TicketPage/>}/>
+                        <Route path="/tickets" element={<TicketsPage/>}/>
                         <Route path="*" element={<NotFoundPage/>}/>
                     </Routes>
                 </CartContext.Provider>
