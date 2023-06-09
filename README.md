@@ -1,5 +1,21 @@
 # Using my web app
-![Miaimeeee](src/assets/gifs/2023-05-16%2002-19-50.gif)
+Los productos que se utilizan en esta aplicación web son extraídos de la API de MercadoLibre y almacenados en Firebase (hay un pequeño script comentado que utilicé para eso).
+
+En la barra de búsqueda, puedes buscar los siguientes productos: teclado, raton, monitor, zapato, cocina, ropa, heladera (copia y pega en el buscador).
+
+En la sección de categorías, se muestran seis categorías diferentes. Puedes elegir cualquiera de ellas y seleccionar la cantidad de productos que desees.
+
+En el carrito de compras se muestran los productos seleccionados, su cantidad, precio individual y el monto total. Si deseas realizar una compra, debes completar un formulario. Una vez que completes el formulario y confirmes la compra, serás redirigido a un código único generado por una librería externa (crypto).
+
+Una vez redirigido, se mostrará el ticket de compra almacenado en Firebase.
+
+También se ha agregado la sección de tickets, que se almacenan en el almacenamiento local (localStorage).
+
+Puedes actualizar la página en cualquier momento, ya que la información del usuario, los productos seleccionados y los tickets se almacenan en el almacenamiento local.
+
+¡Gracias por visitar nuestro sitio! ¡Te mereces una caja de cervezas!
+Pruebas no tengo, dudas tampoco, plata menos asi que espero que te lo pague Dios!
+Saludos!
 
 # Getting Started with Create React App
 
